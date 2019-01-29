@@ -58,19 +58,22 @@ def main():
     print("Output File: {} {}".format(args.target_video, output_size))
     output_video = cv2.VideoWriter(args.target_video, cv2.VideoWriter_fourcc(*'XVID'), args.framerate, output_size)
     count = 0
-    while(vfeed.isOpened()):
-        _, frame = vfeed.read()
-        if (time.time() - start_t) >= capture_delay or capture_delay == 0 :
-            count += 1
-            start_t = time.time()
-            if args.convert:
-                frame = converter.convert(frame)
-            output_video.write(frame)
-            print("--> {} frames".format(count), end='\r')
-            if args.show:
-                cv2.imshow('Capture (press q to stop precording)', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    try:
+        while(vfeed.isOpened()):
+            _, frame = vfeed.read()
+            if (time.time() - start_t) >= capture_delay or capture_delay == 0 :
+                count += 1
+                start_t = time.time()
+                if args.convert:
+                    frame = converter.convert(frame)
+                output_video.write(frame)
+                print("--> {} frames".format(count), end='\r')
+                if args.show:
+                    cv2.imshow('Capture (press q to stop recording)', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+    except KeyboardInterrupt:
+        print("Process interrupted by user")
     output_video.release()
     vfeed.release()
     cv2.destroyAllWindows()
