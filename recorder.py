@@ -27,7 +27,7 @@ YMAP_FILE = "ymap_thetaS_1280x640.pgm"
 SUPPORTED_INPUT = (1280,720)
 
 def main():
-    parser = argparse.ArgumentParser(description='Extract frames as jpg from video feed. To stop the recording press q')
+    parser = argparse.ArgumentParser(description='Save video from camera. To stop the recording press q')
     parser.add_argument('src', type=int, help="Camera index, 0 is the system default camera")
     parser.add_argument('target_video', help="Output video file *.avi")
     parser.add_argument('framerate', help='Frame per second. e.g.: 10 is 10 frames per second and 0.1 is one frame every 10 seconds', type=float)
