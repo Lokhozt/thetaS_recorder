@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
- * Copyright (c) 2019 Linagora.
+ * Copyright (c) 2019 Rudy Baraglia & Yazid Benazzouz for Linagora.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
