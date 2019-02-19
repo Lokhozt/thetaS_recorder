@@ -1,0 +1,143 @@
+2019-02-19 15:24:51,257 INFO  [JavaFX Application Thread     ] [MqttViewManager               ]  - Default configuration file present (/home/rbaraglia/mqtt-spy/mqtt-spy-configuration.xml) = true
+2019-02-19 15:24:51,265 INFO  [JavaFX Application Thread     ] [MqttViewManager               ]  - Loading configuration file from /home/rbaraglia/mqtt-spy/mqtt-spy-configuration.xml
+2019-02-19 15:24:55,778 INFO  [JavaFX Application Thread     ] [EditConnectionsController     ]  - Selecting first item...
+2019-02-19 15:25:00,117 INFO  [JavaFX Application Thread     ] [MqttConfigurationUtils        ]  - Auto-complete for server URI (127.0.0.1 -> tcp://127.0.0.1)
+2019-02-19 15:25:00,553 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/bin
+2019-02-19 15:25:00,556 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/amd64/jli
+2019-02-19 15:25:00,556 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/amd64/server
+2019-02-19 15:25:00,557 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/amd64
+2019-02-19 15:25:00,557 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/images/cursors
+2019-02-19 15:25:00,558 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/images/icons
+2019-02-19 15:25:00,558 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/images
+2019-02-19 15:25:00,558 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/ext
+2019-02-19 15:25:00,558 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/fonts
+2019-02-19 15:25:00,559 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/cmm
+2019-02-19 15:25:00,559 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/jfr
+2019-02-19 15:25:00,560 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/applications
+2019-02-19 15:25:00,562 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/LowContrast/48x48/mimetypes
+2019-02-19 15:25:00,562 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/LowContrast/48x48/apps
+2019-02-19 15:25:00,563 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/LowContrast/48x48
+2019-02-19 15:25:00,563 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/LowContrast/16x16/mimetypes
+2019-02-19 15:25:00,563 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/LowContrast/16x16/apps
+2019-02-19 15:25:00,563 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/LowContrast/16x16
+2019-02-19 15:25:00,563 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/LowContrast
+2019-02-19 15:25:00,563 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrast/48x48/mimetypes
+2019-02-19 15:25:00,564 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrast/48x48/apps
+2019-02-19 15:25:00,564 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrast/48x48
+2019-02-19 15:25:00,564 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrast/16x16/mimetypes
+2019-02-19 15:25:00,564 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrast/16x16/apps
+2019-02-19 15:25:00,564 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrast/16x16
+2019-02-19 15:25:00,564 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrast
+2019-02-19 15:25:00,565 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrastInverse/48x48/mimetypes
+2019-02-19 15:25:00,565 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrastInverse/48x48/apps
+2019-02-19 15:25:00,566 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrastInverse/48x48
+2019-02-19 15:25:00,566 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrastInverse/16x16/mimetypes
+2019-02-19 15:25:00,566 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrastInverse/16x16/apps
+2019-02-19 15:25:00,567 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrastInverse/16x16
+2019-02-19 15:25:00,567 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/HighContrastInverse
+2019-02-19 15:25:00,567 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/hicolor/48x48/mimetypes
+2019-02-19 15:25:00,567 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/hicolor/48x48/apps
+2019-02-19 15:25:00,567 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/hicolor/48x48
+2019-02-19 15:25:00,567 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/hicolor/16x16/mimetypes
+2019-02-19 15:25:00,568 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/hicolor/16x16/apps
+2019-02-19 15:25:00,568 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/hicolor/16x16
+2019-02-19 15:25:00,568 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons/hicolor
+2019-02-19 15:25:00,568 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/icons
+2019-02-19 15:25:00,568 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/mime/packages
+2019-02-19 15:25:00,568 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop/mime
+2019-02-19 15:25:00,568 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/desktop
+2019-02-19 15:25:00,569 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/pt_BR/LC_MESSAGES
+2019-02-19 15:25:00,569 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/pt_BR
+2019-02-19 15:25:00,569 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh.GBK/LC_MESSAGES
+2019-02-19 15:25:00,569 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh.GBK
+2019-02-19 15:25:00,569 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh_HK.BIG5HK/LC_MESSAGES
+2019-02-19 15:25:00,569 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh_HK.BIG5HK
+2019-02-19 15:25:00,570 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/es/LC_MESSAGES
+2019-02-19 15:25:00,570 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/es
+2019-02-19 15:25:00,570 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/de/LC_MESSAGES
+2019-02-19 15:25:00,570 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/de
+2019-02-19 15:25:00,571 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh_TW.BIG5/LC_MESSAGES
+2019-02-19 15:25:00,571 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh_TW.BIG5
+2019-02-19 15:25:00,571 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/sv/LC_MESSAGES
+2019-02-19 15:25:00,571 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/sv
+2019-02-19 15:25:00,571 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/ja/LC_MESSAGES
+2019-02-19 15:25:00,571 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/ja
+2019-02-19 15:25:00,576 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/it/LC_MESSAGES
+2019-02-19 15:25:00,579 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/it
+2019-02-19 15:25:00,580 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/ko.UTF-8/LC_MESSAGES
+2019-02-19 15:25:00,580 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/ko.UTF-8
+2019-02-19 15:25:00,580 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh/LC_MESSAGES
+2019-02-19 15:25:00,580 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh
+2019-02-19 15:25:00,581 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh_TW/LC_MESSAGES
+2019-02-19 15:25:00,581 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/zh_TW
+2019-02-19 15:25:00,582 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/fr/LC_MESSAGES
+2019-02-19 15:25:00,582 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/fr
+2019-02-19 15:25:00,583 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/ko/LC_MESSAGES
+2019-02-19 15:25:00,583 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale/ko
+2019-02-19 15:25:00,583 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/locale
+2019-02-19 15:25:00,583 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/security/policy/limited
+2019-02-19 15:25:00,583 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/security/policy/unlimited
+2019-02-19 15:25:00,583 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/security/policy
+2019-02-19 15:25:00,584 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/security
+2019-02-19 15:25:00,584 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/oblique-fonts
+2019-02-19 15:25:00,584 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/management
+2019-02-19 15:25:00,584 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/applet
+2019-02-19 15:25:00,585 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib/deploy
+2019-02-19 15:25:00,585 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/lib
+2019-02-19 15:25:00,585 ERROR [JavaFX Application Thread     ] [FileUtils                     ]  - No files in /home/rbaraglia/mqtt-spy/
+2019-02-19 15:25:01,148 INFO  [mqtt-spy [ConnectionRunnable for rbaraglia_093122320@127.0.0.1]] [MqttAsyncConnectionRunnable   ]  - Connecting client ID [rbaraglia_093122320] to server [[tcp://127.0.0.1]]; options = 
+============== Connection options ==============
+CleanSession                :  true
+SocketFactory               :  null
+MqttVersion                 :  0
+KeepAliveInterval           :  60
+ConTimeout                  :  30
+UserName                    :  null
+SSLProperties               :  null
+WillDestination             :  null
+==========================================
+
+2019-02-19 15:25:01,218 INFO  [MQTT Call: rbaraglia_093122320] [MqttConnectionResultHandler   ]  - rbaraglia_093122320@127.0.0.1 connected
+2019-02-19 15:25:01,243 INFO  [JavaFX Application Thread     ] [MqttEventHandler              ]  - About to resubscribe to all requested topics
+2019-02-19 15:25:16,340 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "5"
+2019-02-19 15:25:51,166 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "18"
+2019-02-19 15:26:32,708 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "18"
+2019-02-19 15:27:06,965 ERROR [JavaFX Application Thread     ] [ControlPanelController        ]  - Cannot retrieve version info
+pl.baczkowicz.spy.exceptions.XMLException: Cannot read version info from http://baczkowicz.pl/mqtt-spy/version_0_6_0.xml?current=0.5.4-52
+	at pl.baczkowicz.spy.ui.versions.VersionManager.loadVersions(VersionManager.java:102)
+	at pl.baczkowicz.spy.ui.controllers.ControlPanelController$2.run(ControlPanelController.java:203)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.net.ConnectException: Connexion terminée par expiration du délai d'attente (Connection timed out)
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:463)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:558)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:242)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:339)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:357)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1220)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1156)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1050)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:984)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1564)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
+	at java.net.URL.openStream(URL.java:1045)
+	at pl.baczkowicz.spy.ui.versions.VersionManager.loadVersions(VersionManager.java:94)
+	... 2 more
+2019-02-19 15:45:31,704 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "18"
+2019-02-19 15:46:03,425 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "29"
+2019-02-19 15:46:19,745 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "29"
+2019-02-19 15:46:21,825 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "29"
+2019-02-19 15:47:08,290 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "29"
+2019-02-19 15:48:13,892 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "102"
+2019-02-19 15:49:02,037 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "102"
+2019-02-19 15:49:07,141 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "102"
+2019-02-19 15:49:22,414 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "102"
+2019-02-19 15:49:50,664 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "102"
+2019-02-19 15:50:19,127 INFO  [JavaFX Application Thread     ] [MqttAsyncConnection           ]  - Publishing message on topic "lintoclient/recorder". Payload size = "102"

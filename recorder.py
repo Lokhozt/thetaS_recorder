@@ -16,67 +16,137 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import cv2
-import argparse
 import os
 import time
+from threading import Thread
+
+import json
 import numpy as np
+from queue import Queue
+import cv2
+import argparse
+import paho.mqtt.client as mqtt
+import tenacity
 
 XMAP_FILE = "xmap_thetaS_1280x640.pgm"
 YMAP_FILE = "ymap_thetaS_1280x640.pgm"
 SUPPORTED_INPUT = (1280,720)
+FPS = 15
 
 def main():
-    parser = argparse.ArgumentParser(description='Save video from camera. To stop the recording press q')
-    parser.add_argument('src', type=int, help="Camera index, 0 is the system default camera")
-    parser.add_argument('target_video', help="Output video file *.avi")
-    parser.add_argument('framerate', help='Frame per second. e.g.: 10 is 10 frames per second and 0.1 is one frame every 10 seconds', type=float)
-    parser.add_argument('--profil', dest='profil', default='color', choices=['color', 'gray', 'grey'], help=' NOT IMPLEMENTED Color profil either gray or color (default is color)')
-    parser.add_argument('--show', help="Display extracted images", action="store_true")
-    parser.add_argument('--convert', help="Convert dualfisheye to equirectangular image", action="store_true")
-    args = parser.parse_args()
+    client = RecorderClient()
+    client.run()
 
-    if args.framerate <= 0:
-        print("Error: framerate argument must be > 0")
-        parser.print_help()
-        exit(-1)
+class RecorderClient:
+    def __init__(self):
+        with open('config.json', 'r') as f:
+            self.broker_info = json.load(f)
+        self.v_recorder = VideoRecorder(0,FPS)
+        self.mqttClient = self._broker_connect()
+        if self.mqttClient is None:
+            print("Could not connect to broker.")
+            exit(-1)
+            
+        self.recording = False
+
+    def run(self):
+        try:
+            self.mqttClient.loop_forever()
+        except KeyboardInterrupt:
+            print("Process interrupted by user")
+        finally:
+            print("Recorder is off.")
+
+    def start_recording(self, vfilepath, afilepath):
+        self.recording = True
+        self.v_recorder.start_recording(vfilepath)
     
-    capture_delay = 1.0/args.framerate
+    def stop_recording(self):
+        self.v_recorder.stop_recording()
     
-    vfeed = cv2.VideoCapture(args.src)
-    fps = vfeed.get(cv2.CAP_PROP_FPS)
-    input_size = int(vfeed.get(cv2.CAP_PROP_FRAME_WIDTH)), int(vfeed.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    print("Camera FPS : {}".format(fps))
-    if args.convert:
-        assert input_size == SUPPORTED_INPUT, "Only {} dualfisheye video input is supported for now".format(SUPPORTED_INPUT)
-        converter = DFE_Converter()
-    if args.framerate > fps:
-        capture_delay = 0
-    print("Capturing {} frame per second".format(args.framerate))
-    start_t = time.time()
-    output_size = converter.shape() if args.convert else input_size
-    print("Output File: {} {}".format(args.target_video, output_size))
-    output_video = cv2.VideoWriter(args.target_video, cv2.VideoWriter_fourcc(*'XVID'), args.framerate, output_size)
-    count = 0
-    try:
-        while(vfeed.isOpened()):
-            _, frame = vfeed.read()
-            if (time.time() - start_t) >= capture_delay or capture_delay == 0 :
-                count += 1
+    @tenacity.retry(wait=tenacity.wait_random(min=1, max=10),
+                retry=tenacity.retry_if_result(lambda s: s is None),
+                retry_error_callback=(lambda s: s.result())
+                )
+    def _broker_connect(self):
+        """Tries to connect to MQTT broker until it succeeds"""
+        print("Attempting connexion to broker at {}:{}".format(self.broker_info['broker_ip'], self.broker_info['broker_port']))
+        try:
+            broker = mqtt.Client()
+            broker.on_connect = self._on_broker_connect
+            broker.connect(self.broker_info['broker_ip'], self.broker_info['broker_port'], 0)
+            return broker
+        except:
+            print("Failed to connect to broker (Auto-retry)")
+            return None
+
+    def _on_broker_connect(self, client, userdata, flags, rc):
+        print("Succefully connected to broker")
+        self.mqttClient.subscribe(self.broker_info['broker_topic'])
+        self.mqttClient.on_message = self._on_broker_message
+
+    def _on_broker_message(self, client, userdata, message):
+        msg = str(message.payload.decode("utf-8"))
+        print(msg)
+        try:
+            content = json.loads(msg)
+        except:
+            print("Could not parse message: {}".format(msg))
+        try:
+            if content['action'] == "start_recording":
+                v_path = content['target']['videofile']
+                a_path = content['target']['audiofile']
+                # Start recording
+                self.start_recording(v_path, a_path)
+            elif content['action'] == "stop_recording":
+                print("tadou")
+                #stop recording
+            elif content['action'] == "status":
+                self.mqttClient.publish("recorder/status", "{'recording':'{}'}".format(self.recording))
+        except:
+            print("Message wrongly formated : {}".format(content))
+                
+class VideoRecorder:
+    def __init__(self, camera_index: int, frame_rate: int):
+        try:
+            self.vfeed = cv2.VideoCapture(camera_index)
+        except:
+            raise IOError("Could not reach camera at index {}".format(camera_index))
+        
+        if frame_rate <= 0:
+            raise AttributeError("Wrong frame_rate")
+        self.fps = self.vfeed.get(cv2.CAP_PROP_FPS)
+        self.input_size = int(self.vfeed.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.vfeed.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        self.framerate = frame_rate if frame_rate < self.fps else self.fps
+        self.capture_delay = 1.0/frame_rate if frame_rate < self.fps else 0
+        
+        self.converter = DFE_Converter()
+        self.output_size = self.converter.shape()
+        self.recording = False
+
+    def __del__(self):
+        self.vfeed.release()
+
+    def start_recording(self, file_path):
+        self.th = Thread(target=self.record, args=(file_path))
+        self.th.start()
+
+    def record(self, file_path: str):
+        self.output_video = cv2.VideoWriter(file_path, cv2.VideoWriter_fourcc(*'XVID'), self.framerate, self.output_size)
+        start_t = time.time()
+        self.recording = True
+        while(self.vfeed.isOpened() and self.recording):
+            _, frame = self.vfeed.read()
+            if (time.time() - start_t) >= self.capture_delay or self.capture_delay == 0:
                 start_t = time.time()
-                if args.convert:
-                    frame = converter.convert(frame)
-                output_video.write(frame)
-                print("--> {} frames".format(count), end='\r')
-                if args.show:
-                    cv2.imshow('Capture (press q to stop recording)', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-    except KeyboardInterrupt:
-        print("Process interrupted by user")
-    output_video.release()
-    vfeed.release()
-    cv2.destroyAllWindows()
+                frame = self.converter.convert(frame)
+                self.output_video.write(frame)
+
+    def stop_recording(self):
+        self.recording = False
+        self.th.join()
+        self.output_video.release()
+
 
 class DFE_Converter:
     def __init__(self):
