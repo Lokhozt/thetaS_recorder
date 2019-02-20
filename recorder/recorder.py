@@ -69,10 +69,12 @@ class RecorderClient:
         self.recording = True
         self.v_recorder.start_recording(vfilepath)
         self.a_recorder.start_recording(afilepath)
+        self.publish_status()
     
     def stop_recording(self):
         self.v_recorder.stop_recording()
         self.a_recorder.stop_recording()
+        self.publish_status()
     
     @tenacity.retry(wait=tenacity.wait_random(min=1, max=10),
                 retry=tenacity.retry_if_result(lambda s: s is None),
@@ -89,6 +91,9 @@ class RecorderClient:
         except:
             print("Failed to connect to broker (Auto-retry)")
             return None
+
+    def publish_status(self):
+        self.mqttClient.publish("recorder/status", "{'recording':'{}'}".format(self.recording))
 
     def _on_broker_connect(self, client, userdata, flags, rc):
         print("Succefully connected to broker")
@@ -111,7 +116,7 @@ class RecorderClient:
             elif content['action'] == "stop_recording":
                 self.stop_recording()
             elif content['action'] == "status":
-                self.mqttClient.publish("recorder/status", "{'recording':'{}'}".format(self.recording))
+                self.publish_status()
         except:
             print("Message wrongly formated : {}".format(content))
                 
