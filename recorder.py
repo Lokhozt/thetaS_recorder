@@ -24,6 +24,8 @@ import json
 import numpy as np
 from queue import Queue
 import cv2
+import pyaudio
+import wave
 import argparse
 import paho.mqtt.client as mqtt
 import tenacity
@@ -41,7 +43,10 @@ class RecorderClient:
     def __init__(self):
         with open('config.json', 'r') as f:
             self.broker_info = json.load(f)
+
         self.v_recorder = VideoRecorder(0,FPS)
+        self.a_recorder = AudioRecorder(16000,1)
+
         self.mqttClient = self._broker_connect()
         if self.mqttClient is None:
             print("Could not connect to broker.")
@@ -60,9 +65,11 @@ class RecorderClient:
     def start_recording(self, vfilepath, afilepath):
         self.recording = True
         self.v_recorder.start_recording(vfilepath)
+        self.a_recorder.start_recording(afilepath)
     
     def stop_recording(self):
         self.v_recorder.stop_recording()
+        self.a_recorder.stop_recording()
     
     @tenacity.retry(wait=tenacity.wait_random(min=1, max=10),
                 retry=tenacity.retry_if_result(lambda s: s is None),
@@ -99,13 +106,50 @@ class RecorderClient:
                 # Start recording
                 self.start_recording(v_path, a_path)
             elif content['action'] == "stop_recording":
-                print("tadou")
-                #stop recording
+                self.stop_recording()
             elif content['action'] == "status":
                 self.mqttClient.publish("recorder/status", "{'recording':'{}'}".format(self.recording))
         except:
             print("Message wrongly formated : {}".format(content))
                 
+class AudioRecorder:
+    chunk_size = 1024
+    def __init__(self, sample_rate: int, channels: int):
+        self.sample_rate = sample_rate
+        self.channels = channels 
+
+        self.audio = pyaudio.PyAudio()
+        self.stream = self.audio.open(format=pyaudio.paInt16,
+                        channels=channels,
+                        rate=sample_rate,
+                        input=True,
+                        frames_per_buffer=self.chunk_size)
+        self.stream.stop_stream()
+        self.recording = False
+
+    def start_recording(self, file_path):
+        #output file setup
+        self.wavefile = wave.open(file_path, 'wb')
+        self.wavefile.setnchannels(self.channels)
+        self.wavefile.setsampwidth(2)
+        self.wavefile.setframerate(self.sample_rate)
+        self.recording = True
+        self.th = Thread(target=self.record, args=())
+        self.th.start()
+
+    def record(self):
+        self.stream.start_stream()
+        print('Audio recording start')
+        while self.recording:
+            buffer = self.stream.read(self.chunk_size)
+            self.wavefile.writeframes(buffer)
+        
+    def stop_recording(self):
+        self.recording = False
+        self.th.join()
+        self.wavefile.close()
+        print('Audio recording stop')
+
 class VideoRecorder:
     def __init__(self, camera_index: int, frame_rate: int):
         try:
@@ -128,7 +172,8 @@ class VideoRecorder:
         self.vfeed.release()
 
     def start_recording(self, file_path):
-        self.th = Thread(target=self.record, args=(file_path))
+        print("Video recording start")
+        self.th = Thread(target=self.record, args=(file_path,))
         self.th.start()
 
     def record(self, file_path: str):
@@ -141,13 +186,13 @@ class VideoRecorder:
                 start_t = time.time()
                 frame = self.converter.convert(frame)
                 self.output_video.write(frame)
+        self.output_video.release()
 
     def stop_recording(self):
         self.recording = False
         self.th.join()
-        self.output_video.release()
-
-
+        print("Video recording stop")
+        
 class DFE_Converter:
     def __init__(self):
         with open(XMAP_FILE, 'rb') as f:
