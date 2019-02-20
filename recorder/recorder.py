@@ -30,8 +30,11 @@ import argparse
 import paho.mqtt.client as mqtt
 import tenacity
 
-XMAP_FILE = "xmap_thetaS_1280x640.pgm"
-YMAP_FILE = "ymap_thetaS_1280x640.pgm"
+
+FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+XMAP_FILE = os.path.join(FILE_PATH, "xmap_thetaS_1280x640.pgm")
+YMAP_FILE = os.path.join(FILE_PATH, "ymap_thetaS_1280x640.pgm")
+
 SUPPORTED_INPUT = (1280,720)
 FPS = 15
 
@@ -41,7 +44,7 @@ def main():
 
 class RecorderClient:
     def __init__(self):
-        with open('config.json', 'r') as f:
+        with open(os.path.join(FILE_PATH, 'config.json'), 'r') as f:
             self.broker_info = json.load(f)
 
         self.v_recorder = VideoRecorder(0,FPS)

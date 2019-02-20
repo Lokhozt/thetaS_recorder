@@ -1,0 +1,3 @@
+include recorder/xmap_thetaS_1280x640.pgm
+include recorder/ymap_thetaS_1280x640.pgm
+include recorder/config.json

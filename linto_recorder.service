@@ -1,0 +1,13 @@
+[Unit]
+Description=LinTO recorder service
+After=pulseaudio.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi
+ExecStart=/usr/local/bin/linto_recorder
+
+[Install]
+WantedBy=multi-user.target
