@@ -46,8 +46,11 @@ class RecorderClient:
     def __init__(self):
         with open(os.path.join(FILE_PATH, 'config.json'), 'r') as f:
             self.broker_info = json.load(f)
-
-        self.v_recorder = VideoRecorder(0,FPS)
+        try:
+            self.v_recorder = VideoRecorder(0,FPS)
+        except IOError:
+            print("Failed to create instance of video recorder")
+            self.v_recorder = None
         self.a_recorder = AudioRecorder(16000,1)
 
         self.mqttClient = self._broker_connect()
@@ -69,7 +72,16 @@ class RecorderClient:
         if self.recording:
             self.stop_recording()
         self.recording = True
-        self.v_recorder.start_recording(vfilepath)
+        if self.v_recorder is None:
+            try:
+                self.v_recorder = VideoRecorder(0,FPS)
+            except IOError:
+                self.v_recorder = None
+                print("Failed to create instance of video recorder")
+            else:
+                self.v_recorder = VideoRecorder(0,FPS)
+        else:
+            self.v_recorder.start_recording(vfilepath)
         self.a_recorder.start_recording(afilepath)
         self.publish_status()
     
