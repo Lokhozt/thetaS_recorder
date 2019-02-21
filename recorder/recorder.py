@@ -87,7 +87,8 @@ class RecorderClient:
     
     def stop_recording(self):
         if self.recording:
-            self.v_recorder.stop_recording()
+            if self.v_recorder is not None:
+                self.v_recorder.stop_recording()
             self.a_recorder.stop_recording()
             self.publish_status()
             self.recording = False
@@ -180,6 +181,7 @@ class AudioRecorder:
             self.wavefile.writeframes(buffer)
         
     def stop_recording(self):
+        self.stream.stop_stream()
         self.recording = False
         self.th.join()
         self.wavefile.close()
