@@ -36,7 +36,7 @@ XMAP_FILE = os.path.join(FILE_PATH, "xmap_thetaS_1280x640.pgm")
 YMAP_FILE = os.path.join(FILE_PATH, "ymap_thetaS_1280x640.pgm")
 
 SUPPORTED_INPUT = (1280,720)
-FPS = 15
+FPS = 10
 
 def main():
     client = RecorderClient()
