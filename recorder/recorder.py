@@ -66,15 +66,19 @@ class RecorderClient:
             print("Recorder is off.")
 
     def start_recording(self, vfilepath, afilepath):
+        if self.recording:
+            self.stop_recording()
         self.recording = True
         self.v_recorder.start_recording(vfilepath)
         self.a_recorder.start_recording(afilepath)
         self.publish_status()
     
     def stop_recording(self):
-        self.v_recorder.stop_recording()
-        self.a_recorder.stop_recording()
-        self.publish_status()
+        if self.recording:
+            self.v_recorder.stop_recording()
+            self.a_recorder.stop_recording()
+            self.publish_status()
+            self.recording = False
     
     @tenacity.retry(wait=tenacity.wait_random(min=1, max=10),
                 retry=tenacity.retry_if_result(lambda s: s is None),
@@ -93,7 +97,9 @@ class RecorderClient:
             return None
 
     def publish_status(self):
-        self.mqttClient.publish("recorder/status", "{'recording':'{}'}".format(self.recording))
+        print("recorder is {} recording".format('not' if not self.recording else ''))
+        payload = json.dumps({"recording":self.recording})
+        self.mqttClient.publish("recorder/status", payload)
 
     def _on_broker_connect(self, client, userdata, flags, rc):
         print("Succefully connected to broker")
@@ -107,18 +113,27 @@ class RecorderClient:
             content = json.loads(msg)
         except:
             print("Could not parse message: {}".format(msg))
-        try:
-            if content['action'] == "start_recording":
-                v_path = content['target']['videofile']
-                a_path = content['target']['audiofile']
-                # Start recording
-                self.start_recording(v_path, a_path)
+            return
+        if 'action' in content.keys():
+            if content["action"] == "start_recording":
+                if 'target' in content.keys():
+                    if 'videofile' and 'audiofile' in content['target'].keys():
+                        v_path = content['target']['videofile']
+                        a_path = content['target']['audiofile']
+                        # Start recording
+                        self.start_recording(v_path, a_path)
+                        self.publish_status()
+                        return
+                    else:
+                        print("Missing file targets : {}".format(content))
+                else:
+                    print("Missing file targets : {}".format(content))
             elif content['action'] == "stop_recording":
                 self.stop_recording()
+                self.publish_status()
+                return
             elif content['action'] == "status":
                 self.publish_status()
-        except:
-            print("Message wrongly formated : {}".format(content))
                 
 class AudioRecorder:
     chunk_size = 1024
