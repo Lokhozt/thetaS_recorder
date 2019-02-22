@@ -37,6 +37,7 @@ YMAP_FILE = os.path.join(FILE_PATH, "ymap_thetaS_1280x640.pgm")
 
 SUPPORTED_INPUT = (1280,720)
 FPS = 10
+DEFAULT_CAMERA_INDEX = 1
 
 def main():
     client = RecorderClient()
@@ -47,7 +48,7 @@ class RecorderClient:
         with open(os.path.join(FILE_PATH, 'config.json'), 'r') as f:
             self.broker_info = json.load(f)
         try:
-            self.v_recorder = VideoRecorder(0,FPS)
+            self.v_recorder = VideoRecorder(DEFAULT_CAMERA_INDEX,FPS)
         except IOError:
             print("Failed to create instance of video recorder")
             self.v_recorder = None
@@ -110,7 +111,7 @@ class RecorderClient:
             return None
 
     def publish_status(self):
-        print("recorder is {} recording".format('not' if not self.recording else ''))
+        print("recorder is {}recording".format('not ' if not self.recording else ''))
         payload = json.dumps({"recording":self.recording})
         self.mqttClient.publish("recorder/status", payload)
 
@@ -183,19 +184,21 @@ class AudioRecorder:
             self.wavefile.writeframes(buffer)
         
     def stop_recording(self):
-        self.stream.stop_stream()
         self.recording = False
         self.th.join()
+        self.stream.stop_stream()
         self.wavefile.close()
         print('Audio recording stop')
 
 class VideoRecorder:
     def __init__(self, camera_index: int, frame_rate: int):
-        try:
-            self.vfeed = cv2.VideoCapture(camera_index)
-        except:
-            raise IOError("Could not reach camera at index {}".format(camera_index))
+        self.converter = DFE_Converter()
+        self.init_vfeed(camera_index, frame_rate)
+        self.recording = False
         
+    
+    def init_vfeed(self, camera_index: int, frame_rate: int):
+        self.vfeed = cv2.VideoCapture(camera_index)
         if frame_rate <= 0:
             raise AttributeError("Wrong frame_rate")
         self.fps = self.vfeed.get(cv2.CAP_PROP_FPS)
@@ -203,17 +206,22 @@ class VideoRecorder:
         self.framerate = frame_rate if frame_rate < self.fps else self.fps
         self.capture_delay = 1.0/frame_rate if frame_rate < self.fps else 0
         
-        self.converter = DFE_Converter()
         self.output_size = self.converter.shape()
-        self.recording = False
-
+        
     def __del__(self):
-        self.vfeed.release()
+        if self.vfeed.isOpened():
+            self.vfeed.release()    
 
     def start_recording(self, file_path):
-        print("Video recording start")
         if os.path.isfile(file_path):
             os.remove(file_path)
+        if self.vfeed.isOpened():
+            self.vfeed.release()
+        self.init_vfeed(DEFAULT_CAMERA_INDEX, FPS)
+        if not self.vfeed.isOpened():
+            self.th = None
+            return
+        print("Video recording start")
         self.th = Thread(target=self.record, args=(file_path,))
         self.th.start()
 
@@ -230,9 +238,10 @@ class VideoRecorder:
         self.output_video.release()
 
     def stop_recording(self):
-        self.recording = False
-        self.th.join()
-        print("Video recording stop")
+        if self.recording:
+            self.recording = False
+            self.th.join()
+            print("Video recording stop")
         
 class DFE_Converter:
     def __init__(self):
