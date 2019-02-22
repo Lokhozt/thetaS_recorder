@@ -149,7 +149,7 @@ class RecorderClient:
                 self.publish_status()
                 
 class AudioRecorder:
-    chunk_size = 1024
+    chunk_size = 2048
     def __init__(self, sample_rate: int, channels: int):
         self.sample_rate = sample_rate
         self.channels = channels 
@@ -165,6 +165,8 @@ class AudioRecorder:
 
     def start_recording(self, file_path):
         #output file setup
+        if os.path.isfile(file_path):
+            os.remove(file_path)
         self.wavefile = wave.open(file_path, 'wb')
         self.wavefile.setnchannels(self.channels)
         self.wavefile.setsampwidth(2)
@@ -210,6 +212,8 @@ class VideoRecorder:
 
     def start_recording(self, file_path):
         print("Video recording start")
+        if os.path.isfile(file_path):
+            os.remove(file_path)
         self.th = Thread(target=self.record, args=(file_path,))
         self.th.start()
 
