@@ -37,7 +37,7 @@ YMAP_FILE = os.path.join(FILE_PATH, "ymap_thetaS_1280x640.pgm")
 
 SUPPORTED_INPUT = (1280,720)
 FPS = 10
-DEFAULT_CAMERA_INDEX = 1
+DEFAULT_CAMERA_INDEX = 0
 
 def main():
     client = RecorderClient()
@@ -67,6 +67,7 @@ class RecorderClient:
         except KeyboardInterrupt:
             print("Process interrupted by user")
         finally:
+            self.recording = False
             print("Recorder is off.")
 
     def start_recording(self, vfilepath, afilepath):
