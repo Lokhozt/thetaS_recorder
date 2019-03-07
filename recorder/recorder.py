@@ -201,14 +201,16 @@ class AudioRecorder:
         print('Audio recording stop')
 
 class VideoRecorder:
-    def __init__(self, camera_index: int):
+    def __init__(self, camera_index: int, framerate: int = 5):
+        self.framerate = framerate
+        self.capture_delay = 1./framerate
         self.converter = DFE_Converter()
         self.init_vfeed(camera_index)
         self.recording = False
         
+        
     def init_vfeed(self, camera_index: int):
         self.vfeed = cv2.VideoCapture(camera_index)
-        self.fps = self.vfeed.get(cv2.CAP_PROP_FPS)
         self.input_size = int(self.vfeed.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.vfeed.get(cv2.CAP_PROP_FRAME_HEIGHT))        
         self.output_size = self.converter.shape()
         
@@ -237,10 +239,14 @@ class VideoRecorder:
         return self.vfeed.isOpened()
 
     def record(self, file_path: str):
-        self.output_video = cv2.VideoWriter(file_path, cv2.VideoWriter_fourcc(*'XVID'), self.fps, self.output_size)
+        self.output_video = cv2.VideoWriter(file_path, cv2.VideoWriter_fourcc(*'XVID'), self.framerate, self.output_size)
         self.recording = True
+        start_time = time.time()
         while(self.vfeed.isOpened() and self.recording):
+            if time.time() - start_time < self.capture_delay:
+                continue 
             ret, frame = self.vfeed.read()
+            start_time = time.time()
             if ret:
                 frame = self.converter.convert(frame)
                 self.output_video.write(frame)
