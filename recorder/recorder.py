@@ -157,13 +157,16 @@ class AudioRecorder:
         self.channels = channels 
 
         self.audio = pyaudio.PyAudio()
-        self.stream = self.audio.open(format=pyaudio.paInt16,
+        self.stream = self.open_stream(channels, sample_rate)
+        self.stream.stop_stream()
+        self.recording = False
+
+    def open_stream(self, channels, sample_rate):
+        return self.audio.open(format=pyaudio.paInt16,
                         channels=channels,
                         rate=sample_rate,
                         input=True,
                         frames_per_buffer=self.chunk_size)
-        self.stream.stop_stream()
-        self.recording = False
 
     def start_recording(self, file_path):
         #output file setup
@@ -185,6 +188,8 @@ class AudioRecorder:
                 buffer = self.stream.read(self.chunk_size)
             except OSError as err:
                 print("OSError occured: {}".format(err))
+                if not self.stream.is_active():
+                    self.stream.start_stream()
 
             self.wavefile.writeframes(buffer)
         

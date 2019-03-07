@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="linto_recorder",
-    version="0.1.4",
+    version="0.1.5",
     include_package_data=True,
     packages=find_packages(),
     entry_points = {
