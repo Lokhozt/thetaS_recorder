@@ -17,6 +17,7 @@
 '''
 
 import os
+import sys
 import time
 from threading import Thread
 
@@ -31,9 +32,13 @@ import paho.mqtt.client as mqtt
 import tenacity
 
 
-FILE_PATH = os.path.dirname(os.path.abspath(__file__))
-XMAP_FILE = os.path.join(FILE_PATH, "xmap_thetaS_1280x640.pgm")
-YMAP_FILE = os.path.join(FILE_PATH, "ymap_thetaS_1280x640.pgm")
+if getattr(sys, 'frozen', False):
+    DIR_PATH = os.path.dirname(sys.executable)
+else:
+    DIR_PATH = os.path.dirname(__file__)
+
+XMAP_FILE = os.path.join(DIR_PATH, "xmap_thetaS_1280x640.pgm")
+YMAP_FILE = os.path.join(DIR_PATH, "ymap_thetaS_1280x640.pgm")
 
 SUPPORTED_INPUT = (1280,720)
 DEFAULT_CAMERA_INDEX = 0
@@ -46,7 +51,7 @@ def main():
 
 class RecorderClient:
     def __init__(self):
-        with open(os.path.join(FILE_PATH, 'config.json'), 'r') as f:
+        with open(os.path.join(DIR_PATH, 'config.json'), 'r') as f:
             self.broker_info = json.load(f)
         try:
             self.v_recorder = VideoRecorder(DEFAULT_CAMERA_INDEX)
@@ -157,8 +162,6 @@ class AudioRecorder:
         self.channels = channels 
 
         self.audio = pyaudio.PyAudio()
-        self.stream = self.open_stream(channels, sample_rate)
-        self.stream.stop_stream()
         self.recording = False
 
     def open_stream(self, channels, sample_rate):
@@ -181,15 +184,18 @@ class AudioRecorder:
         self.th.start()
 
     def record(self):
-        self.stream.start_stream()
+        self.stream = self.open_stream(self.channels, self.sample_rate)
         print('Audio recording start')
         while self.recording:
             try:
                 buffer = self.stream.read(self.chunk_size)
-            except OSError as err:
-                print("OSError occured: {}".format(err))
+            except:
+                print("Error occured: {}")
                 if not self.stream.is_active():
-                    self.stream.start_stream()
+                    try:
+                        self.stream.start_stream()
+                    except:
+                        self.stream = self.open_stream(self.channels, self.sample_rate)
 
             self.wavefile.writeframes(buffer)
         
@@ -244,9 +250,10 @@ class VideoRecorder:
         start_time = time.time()
         while(self.vfeed.isOpened() and self.recording):
             if time.time() - start_time < self.capture_delay:
-                continue 
-            ret, frame = self.vfeed.read()
+                continue
             start_time = time.time()
+            ret, frame = self.vfeed.read()
+            
             if ret:
                 frame = self.converter.convert(frame)
                 self.output_video.write(frame)
